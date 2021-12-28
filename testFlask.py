@@ -39,10 +39,10 @@ class UplodadedFiles(Resource):
     def get(self):
         pathFolder = 'C:/Users/marce/Documents/uploads/'
         array = os.listdir(pathFolder)
-        
+
         extArray = []
         fileSizeArray = []
-        
+
         for item in array:
             ext = item.split('.')
             extArray.append(ext[-1].upper())
@@ -50,7 +50,7 @@ class UplodadedFiles(Resource):
             sizeFile /= 1000000
             sizeFile = f'{sizeFile:.2f}MB'
             fileSizeArray.append(sizeFile)
-    
+
         arraySize = len(array)
         return make_response(render_template('list.html', array=array, extArray=extArray, fileSizeArray=fileSizeArray, arraySize=arraySize))
 
@@ -66,4 +66,4 @@ api.add_resource(UplodadedFiles, '/list')
 api.add_resource(DownloadFiles, '/list/<name>')
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", debug=True)
+    app.run(host="0.0.0.0", debug=False)
