@@ -37,15 +37,22 @@ class AppointmentController(Resource):
 # PÁGINA COM A LISTA DOS ARQUIVOS UPADOS
 class UplodadedFiles(Resource):
     def get(self):
-        path = 'C:/Users/marce/Documents/uploads'
-        array = os.listdir(path)
+        pathFolder = 'C:/Users/marce/Documents/uploads/'
+        array = os.listdir(pathFolder)
+        
         extArray = []
+        fileSizeArray = []
+        
         for item in array:
             ext = item.split('.')
-            extArray.append(ext[-1])
+            extArray.append(ext[-1].upper())
+            sizeFile = os.path.getsize(pathFolder + item)
+            sizeFile /= 1000000
+            sizeFile = f'{sizeFile:.2f}MB'
+            fileSizeArray.append(sizeFile)
+    
         arraySize = len(array)
-
-        return make_response(render_template('list.html', array=array, extArray=extArray, arraySize=arraySize))
+        return make_response(render_template('list.html', array=array, extArray=extArray, fileSizeArray=fileSizeArray, arraySize=arraySize))
 
 
 # DOWNLOAD DE ARQUIVO
